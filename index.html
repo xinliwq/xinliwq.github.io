@@ -255,7 +255,7 @@
       _idcard = $('#js_input2').val();
       $.ajax({
         type: 'GET',
-        url: "http://localhost:8080/user/detail/" + _idcard,
+        url: "http://qcdg5hv5utvf37p2s.osorg.cn/user/detail/" + _idcard,
         contentType: 'application/json;charset=UTF-8',
         success: function (res) {
           if (res.code === 200) {
@@ -361,7 +361,7 @@
     if (_uid == undefined || _uid == "") {
       $.ajax({
         type: 'POST',
-        url: "http://localhost:8080/user/add",
+        url: "http://qcdg5hv5utvf37p2s.osorg.cn/user/add",
         data: JSON.stringify(param),
         contentType: 'application/json;charset=UTF-8',
         success: function (res) {
@@ -381,7 +381,7 @@
       param.id = _uid;
       $.ajax({
         type: 'POST',
-        url: "http://localhost:8080/user/update",
+        url: "http://qcdg5hv5utvf37p2s.osorg.cn/user/update",
         data: JSON.stringify(param),
         contentType: 'application/json;charset=UTF-8',
         success: function (res) {
@@ -450,7 +450,7 @@
       // 上传文件
       $.ajax({
         type: 'POST',
-        url: "http://localhost:8080/oss/upload/single",
+        url: "http://qcdg5hv5utvf37p2s.osorg.cn/oss/upload/single",
         data: formData,
         cache: false, // 上传文件无需缓存
         processData: false, // 使数据不做处理
