@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>填写个人资料</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <link href="https://cdn.staticfile.org/weui/2.5.1/style/weui.min.css" rel="stylesheet">
+
+  <style type="text/css">
+    body {
+      /* margin: 0 !important; */
+      max-width: 40rem;
+      margin: 0 auto;
+    }
+
+    .weui-icon-success {
+      color: #61C1BE;
+    }
+
+    .weui-btn_primary {
+      background-color: #61C1BE;
+    }
+
+    .weui-form__control-area {
+      margin: 10px 0 30px;
+    }
+
+    .weui-notice {
+      width: 20px;
+      color: red;
+      font-size: 20px;
+      padding-top: 20%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="page1">
+    <div class="weui-form__control-area">
+      <div class="weui-cells__group weui-cells__group_form" id="myform">
+        <div class="weui-cells__title" style="font-size: 1.5rem;margin: 20px 0px;">填写个人资料</div>
+        <div class="weui-cells weui-cells_form">
+          <label for="js_input2" class="weui-cell weui-cell_active">
+            <div class="weui-cell__hd"><span class="weui-label">身份证号码</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input2" class="weui-input" placeholder="请输入身份证号码" />
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+          <label for="js_input1" class="weui-cell weui-cell_active">
+            <div class="weui-cell__hd"><span class="weui-label">姓名</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input1" class="weui-input" placeholder="请输入姓名" />
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+          <label for="js_input3" class="weui-cell weui-cell_active">
+            <div class="weui-cell__hd"><span class="weui-label">合同编号</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input3" class="weui-input" placeholder="请输入购房合同编号" type="number" pattern="[0-9]*" />
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+          <label for="js_input4" class="weui-cell weui-cell_active">
+            <div class="weui-cell__hd"><span class="weui-label">楼栋号</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input4" class="weui-input" placeholder="请输入楼栋号：11" type="number" pattern="[0-9]*" />
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+          <label for="js_input5" class="weui-cell weui-cell_active">
+            <div class="weui-cell__hd"><span class="weui-label">房号</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input5" class="weui-input" placeholder="请输入房号：1-201" />
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+          <label for="js_input6" class="weui-cell weui-cell_active">
+            <div class="weui-cell__hd"><span class="weui-label">联系电话</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input6" class="weui-input" placeholder="请输入手机号码" type="number" pattern="[0-9]*" />
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+          <label for="js_input7" class="weui-cell weui-cell_active">
+            <div class="weui-cell__hd"><span class="weui-label">邮箱</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input7" class="weui-input" placeholder="请输入邮箱" type="email" />
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+          <p style="margin: 0 2rem; color: red;font-size: 14px;">邮箱是很重要的信息，我们会通过邮箱发送邀请码和认证信息！</p>
+          <label for="js_input8" class="weui-cell weui-cell_active" id="picker_address">
+            <div class="weui-cell__hd"><span class="weui-label">工作所在地</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input8" class="weui-input" placeholder="请选择省市区" readonly />
+            </div>
+            <div class="weui-cell__ft">
+              <i role="img" class="js_target weui-icon-arrow" style="transform: rotate(90deg);"></i>
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+
+          <!-- 文件上传开始 -->
+          <div class="page__bd">
+            <div role="dialog" aria-hidden="true" aria-modal="true" class="weui-gallery" id="gallery">
+              <span role="img" tabindex="0" class="weui-gallery__img" id="galleryImg"></span>
+              <div class="weui-gallery__opr">
+                <a role="button" aria-label="删除" href="javascript:" class="weui-gallery__del">
+                  <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                </a>
+              </div>
+            </div>
+            <div class="weui-cells weui-cells_form">
+              <div class="weui-cell  weui-cell_uploader">
+                <div class="weui-cell__bd">
+                  <div class="weui-uploader">
+                    <div class="weui-uploader__hd" role="option"
+                      aria-labelledby="js_uploader_title js_a11y_comma js_uploader_current_num js_uploader_unit js_a11y_comma js_uploader_max_tips js_uploader_max_num js_uploader_unit">
+                      <p id="js_uploader_title" class="weui-uploader__title">身份证和合同上传</p>
+                      <div class="weui-uploader__info">
+                        <span id="js_uploader_current_num">0</span>/<span id="js_uploader_max_num">2</span>
+                      </div>
+                      <div id="js_uploader_unit" class="weui-hidden_abs">张</div>
+                      <div id="js_uploader_max_tips" class="weui-hidden_abs">可上传</div>
+                      <div class="weui-cell__ft">
+                        <span aria-label="" class="weui-notice">*</span>
+                      </div>
+                    </div>
+                    <div class="weui-uploader__bd">
+                      <ul class="weui-uploader__files" id="uploaderFiles">
+                      </ul>
+                      <div class="weui-uploader__input-box">
+                        <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p style="margin: 0 2rem; color:red;font-size: 14px;">照片请拍全！身份证上传人头像一面，合同为首页</p>
+            </div>
+          </div>
+          <!-- 文件上传结束 -->
+
+        </div>
+      </div>
+    </div>
+
+    <a href="javascript:" role="button" title="等待中" class="weui-btn weui-btn_primary weui-btn_loading" id="submit">
+      <span class="weui-primary-loading weui-primary-loading_transparent" id="submit_loading" style="display: none;">
+        <i class="weui-primary-loading__dot"></i>
+      </span>
+      提交</a>
+
+    <div class="weui-form__extra-area">
+      <div class="weui-footer">
+        <p class="weui-footer__links">
+          <a href="javascript:" class="weui-footer__link"></a>
+        </p>
+        <p class="weui-footer__text">Copyright © 2022 裕泰园全体业主</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page" id="page2" style="display: none;height: 100vh;">
+    <div class="weui-msg">
+      <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+      <div class="weui-msg__text-area">
+        <h2 class="weui-msg__title">操作成功</h2>
+        <div class="weui-msg__tips-area">
+          请耐心等待管理员审核提交材料，审核通过后，我们会通过邮件发送进群邀请码给到你
+        </div>
+      </div>
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <a href="javascript:location.reload();" role="button" class="weui-btn weui-btn_primary" id="resetBtn">返回</a>
+        </p>
+      </div>
+      <div class="weui-msg__extra-area">
+        <div class="weui-footer">
+          <p class="weui-footer__links">
+            <a href="javascript:" class="weui-wa-hotarea weui-footer__link"></a>
+          </p>
+          <p class="weui-footer__text">Copyright © 2022 裕泰园全体业主</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div role="alert" id="textToast" style="display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast weui-toast_text">
+      <p class="weui-toast__content" id="toast_text"></p>
+    </div>
+  </div>
+
+</body>
+
+
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/t/wx_fed/cdn_libs/res/weui/1.2.5/weui.min.js"></script>
+<script type="text/javascript" src="./js/city.js"></script>
+
+<script type="text/javascript">
+  var tmpl = '<li class="weui-uploader__file" role="img" tabindex="0" style="background-image:url(#url#)"></li>',
+    $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
+    $uploaderInput = $("#uploaderInput"),
+    $uploaderFiles = $("#uploaderFiles");
+  var src, url = window.URL || window.webkitURL || window.mozURL;
+  var _regionCode = "";
+  var _regionCodeArr = [];
+  var _uid = "";
+  var _img = [];
+  var _regionName = "";
+  // 允许上传的图片类型
+  var allowTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
+  var maxSize = 1024 * 1024 * 10; // 10240KB，也就是 10MB
+  var maxCount = 2;// 最大上传图片数量
+  function showToast (msg) {
+    var $textToast = $('#textToast');
+    if ($textToast.css('display') != 'none') return;
+    $("#toast_text").text(msg);
+    $textToast.fadeIn(100);
+    setTimeout(function () {
+      $textToast.fadeOut(100);
+    }, 2000);
+  }
+
+  $('#resetBtn').on('click', function () {
+    $('#myForm')[0].reset();
+  });
+
+  $(function () {
+    var _idcard = '';
+    $("#js_input2").blur(function () { //失去焦点
+      _idcard = $('#js_input2').val();
+      $.ajax({
+        type: 'GET',
+        url: "http://localhost:8080/user/detail/" + _idcard,
+        contentType: 'application/json;charset=UTF-8',
+        success: function (res) {
+          if (res.code === 200) {
+            param = res.data;
+            _regionCodeArr = param.regionCodeArr;
+            _regionCode = param.regionCode;
+            _uid = param.id;
+            _regionName = param.regionName;
+            if (param.imgs == undefined || param.imgs == null) {
+              _img = [];
+            } else {
+              _img = param.imgs;
+            }
+            $('#js_input1').val(param.realName);
+            $('#js_input3').val(param.contractNo);
+            $('#js_input4').val(param.buildingNo);
+            $('#js_input5').val(param.roomNo);
+            $('#js_input6').val(param.mobile);
+            $('#js_input7').val(param.email);
+            $('#js_input8').val(param.regionName);
+            $("#uploaderFiles").empty();
+            for (let index = 0; index < _img.length; index++) {
+              $("#uploaderFiles").append($(tmpl.replace('#url#', _img[index])));
+            }
+            $('#js_uploader_current_num').text(_img.length);
+          }
+        },
+        error: function (error) {
+
+        }
+      });
+    });
+  });
+
+  $('#submit').on('click', function () {
+    if ($('#js_input1').val() == "") {
+      showToast("姓名是必填项！");
+      return;
+    }
+    if ($('#js_input2').val() == "") {
+      showToast("身份证号码是必填项！");
+      return;
+    }
+    if ($('#js_input3').val() == "") {
+      showToast("合同编号是必填项！");
+      return;
+    }
+    if ($('#js_input4').val() == "") {
+      showToast("楼栋是必填项！");
+      return;
+    }
+    if ($('#js_input5').val() == "") {
+      showToast("房号是必填项！");
+      return;
+    }
+    if ($('#js_input6').val() == "") {
+      showToast("联系电话是必填项！");
+      return;
+    } else {
+      if ($('#js_input6').val().length != 11) {
+        showToast("请输入正确的手机号码!");
+        return;
+      }
+    }
+    if ($('#js_input7').val() == "") {
+      showToast("邮箱是必填项！");
+      return;
+    }
+    if ($('#js_input8').val() == "") {
+      showToast("工作所在地是必填项！");
+      return;
+    }
+    if ($('.weui-uploader__file').length < maxCount) {
+      showToast('至少选择' + maxCount + '张图片');
+      return;
+    }
+    var param = {
+      'realName': $('#js_input1').val(),
+      'idcard': $('#js_input2').val(),
+      'contractNo': $('#js_input3').val(),
+      'buildingNo': $('#js_input4').val(),
+      'roomNo': $('#js_input5').val(),
+      'mobile': $('#js_input6').val(),
+      'email': $('#js_input7').val()
+    };
+    if (_regionCodeArr.length > 1) {
+      param.regionCode = _regionCode;
+      param.regionName = _regionName;
+      if (Array.isArray(_regionCodeArr)) {
+        param.regionCodeArr = JSON.stringify(_regionCodeArr);
+      } else {
+        param.regionCodeArr = _regionCodeArr
+      }
+    }
+    if (_img.length > 1) {
+      if (Array.isArray(_img)) {
+        param.img = JSON.stringify(_img);
+      } else {
+        param.img = _img;
+      }
+    }
+    $("#submit_loading").css("display", 'inline-block');
+    if (_uid == undefined || _uid == "") {
+      $.ajax({
+        type: 'POST',
+        url: "http://localhost:8080/user/add",
+        data: JSON.stringify(param),
+        contentType: 'application/json;charset=UTF-8',
+        success: function (res) {
+          $("#submit_loading").css("display", 'none');
+          if (res.code === 200) {
+            $("#page1").css('display', 'none');
+            $("#page2").css('display', 'block');
+          } else {
+            showToast(res.message);
+          }
+        },
+        error: function (error) {
+          $("#submit_loading").css("display", 'none');
+        }
+      });
+    } else {
+      param.id = _uid;
+      $.ajax({
+        type: 'POST',
+        url: "http://localhost:8080/user/update",
+        data: JSON.stringify(param),
+        contentType: 'application/json;charset=UTF-8',
+        success: function (res) {
+          $("#submit_loading").css("display", 'none');
+          if (res.code === 200) {
+            $("#page1").css('display', 'none');
+            $("#page2").css('display', 'block');
+          } else {
+            showToast(res.message);
+          }
+        },
+        error: function (error) {
+          $("#submit_loading").css("display", 'none');
+        }
+      });
+    }
+
+
+  });
+  $('#picker_address').on('click', function () {
+    weui.picker(citys, {
+      depth: 3,
+      defaultValue: [360000, 360100, 360122],
+      onChange: function onChange (result) {
+      },
+      onConfirm: function onConfirm (result) {
+        _regionCode = result[result.length - 1]['value'];
+        _regionCodeArr = [];
+        $('#js_input8').val("");
+        for (var i = 0; i < result.length; i++) {
+          var city = $('#js_input8').val();
+          _regionCodeArr.push(result[i]['value']);
+          $('#js_input8').val(city + result[i]['label'] + " ")
+        }
+      },
+      id: 'cascadePicker',
+      title: '请选择省市区'
+    });
+  });
+  $uploaderInput.on("change", function (e) {
+    var files = e.target.files;
+    if ($('.weui-uploader__file').length >= maxCount) {
+      showToast('最多只能上传' + maxCount + '张图片');
+      return;
+    }
+    for (var i = 0, len = files.length; i < len; ++i) {
+      var file = files[i];
+      if (file.size > maxSize) {
+        showToast("图片太大，不允许上传");
+      }
+      if (allowTypes.indexOf(file.type) === -1) {
+        showToast('只能选择照片上传');
+        return;
+      }
+      var formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileType", 1);
+      if (url) {
+        src = url.createObjectURL(file);
+      } else {
+        src = e.target.result;
+      }
+      $uploaderFiles.append($(tmpl.replace('#url#', src)));
+      var num = $('.weui-uploader__file').length;
+      $('#js_uploader_current_num').text(num);
+      // 上传文件
+      $.ajax({
+        type: 'POST',
+        url: "http://localhost:8080/oss/upload/single",
+        data: formData,
+        cache: false, // 上传文件无需缓存
+        processData: false, // 使数据不做处理
+        contentType: false, // 不要设置Content-Type请求头
+        success: function (res) {
+          if (res.code === 200) {
+            _img.push(res.data)
+          } else {
+            showToast(res.message);
+          }
+        },
+        error: function (error) {
+
+        }
+      });
+
+    }
+
+  });
+  var index; //第几张图片
+  $uploaderFiles.on("click", "li", function () {
+    index = $(this).index();
+    $galleryImg.attr("style", this.getAttribute("style"));
+    $gallery.fadeIn(100);
+  });
+  $gallery.on("click", function () {
+    $gallery.fadeOut(100);
+  });
+
+  //删除图片
+  $(".weui-gallery__del").click(function () {
+    $uploaderFiles.find("li").eq(index).remove();
+    var num = $('.weui-uploader__file').length;
+    $('#js_uploader_current_num').text(num);
+    if (_img.length > 0) {
+      _img.splice(index - 1, 1);
+    }
+  });
+</script>
+
+</html>

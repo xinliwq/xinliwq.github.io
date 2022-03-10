@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>管理员校验</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <link href="https://cdn.staticfile.org/weui/2.5.1/style/weui.min.css" rel="stylesheet">
+
+  <style type="text/css">
+    body {
+      margin: 0 !important;
+    }
+
+    .weui-icon-success {
+      color: #61C1BE;
+    }
+
+    .weui-btn_primary {
+      background-color: #61C1BE;
+    }
+
+    .weui-form__control-area {
+      margin: 10px 0 30px;
+    }
+
+    .weui-notice {
+      width: 20px;
+      color: red;
+      font-size: 20px;
+      padding-top: 20%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="page1">
+    <div class="weui-form__control-area">
+      <div class="weui-cells__group weui-cells__group_form" id="myform">
+        <div class="weui-cells__title" style="font-size: 1.5rem;margin: 20px 0px;">管理员校验</div>
+        <div class="weui-cells weui-cells_form">
+          <label for="js_input1" class="weui-cell weui-cell_active">
+            <div class="weui-cell__hd"><span class="weui-label">邀请码</span></div>
+            <div class="weui-cell__bd">
+              <input id="js_input1" class="weui-input" placeholder="请输入邀请码" />
+            </div>
+            <div class="weui-cell__ft">
+              <span aria-label="" class="weui-notice">*</span>
+            </div>
+          </label>
+
+        </div>
+      </div>
+    </div>
+
+    <a href="javascript:" role="button" title="等待中" class="weui-btn weui-btn_primary weui-btn_loading" id="submit">
+      <span class="weui-primary-loading weui-primary-loading_transparent" id="submit_loading" style="display: none;">
+        <i class="weui-primary-loading__dot"></i>
+      </span>
+      验证</a>
+
+    <div class="weui-form__extra-area">
+      <div class="weui-footer">
+        <p class="weui-footer__links">
+          <a href="javascript:" class="weui-footer__link"></a>
+        </p>
+        <p class="weui-footer__text">Copyright © 2022 裕泰园全体业主</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page" id="page2" style="display: block;height: 100vh;">
+    <div class="weui-msg">
+      <!-- 成功提示 -->
+      <div class="weui-msg__text-area">
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-success weui-icon_msg"></i>
+        </div>
+        <h2 class="weui-msg__title">校验成功</h2>
+        <div class="weui-msg__tips-area">
+
+        </div>
+      </div>
+      <!-- 错误提示 -->
+      <div class="weui-msg__text-area">
+        <div class="weui-msg__icon-area">
+          <i class="weui-icon-warn weui-icon_msg"></i>
+        </div>
+        <h2 class="weui-msg__title">邀请码无效</h2>
+        <div class="weui-msg__tips-area">
+
+        </div>
+      </div>
+
+      <div class="weui-msg__opr-area">
+        <p class="weui-btn-area">
+          <a href="javascript:location.reload();" role="button" class="weui-btn weui-btn_primary" id="resetBtn">返回</a>
+        </p>
+      </div>
+      <div class="weui-msg__extra-area">
+        <div class="weui-footer">
+          <p class="weui-footer__links">
+            <a href="javascript:" class="weui-wa-hotarea weui-footer__link"></a>
+          </p>
+          <p class="weui-footer__text">Copyright © 2022 裕泰园全体业主</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div role="alert" id="textToast" style="display: none;">
+    <div class="weui-mask_transparent"></div>
+    <div class="weui-toast weui-toast_text">
+      <p class="weui-toast__content" id="toast_text"></p>
+    </div>
+  </div>
+
+</body>
+
+
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/t/wx_fed/cdn_libs/res/weui/1.2.5/weui.min.js"></script>
+<script type="text/javascript" src="./js/city.js"></script>
+
+<script type="text/javascript">
+  var _regionCode = "";
+  var _regionCodeArr = [];
+  function showToast (msg) {
+    var $textToast = $('#textToast');
+    if ($textToast.css('display') != 'none') return;
+    $("#toast_text").text(msg);
+    $textToast.fadeIn(100);
+    setTimeout(function () {
+      $textToast.fadeOut(100);
+    }, 2000);
+  }
+
+  function getQueryString (name) {
+    let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    let r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+      return decodeURIComponent(r[2]);
+    };
+    return null;
+  }
+
+  $('#resetBtn').on('click', function () {
+    $('#myForm')[0].reset();
+  });
+
+  $('#submit').on('click', function () {
+
+    if ($('#js_input1').val() == "") {
+      showToast("姓名是必填项！");
+      return;
+    }
+    if ($('#js_input2').val() == "") {
+      showToast("身份证号码是必填项！");
+      return;
+    }
+    if ($('#js_input3').val() == "") {
+      showToast("合同编号是必填项！");
+      return;
+    }
+    if ($('#js_input4').val() == "") {
+      showToast("联系电话是必填项！");
+      return;
+    }
+    if ($('#js_input5').val() == "") {
+      showToast("邮箱是必填项！");
+      return;
+    }
+    if ($('#js_input6').val() == "") {
+      showToast("工作所在地是必填项！");
+      return;
+    }
+    var param = {
+      'patientName': $('#js_input1').val(),
+
+    };
+    if ($('#js_input2').val() != "") {
+      param.sex = _sex;
+    }
+    if ($('#js_input3').val() != "") {
+      param.birthday = _birthday;
+    }
+    if ($('#js_input6').val() != "") {
+      param.height = $('#js_input6').val();
+    }
+    if ($('#js_input7').val() != "") {
+      param.weight = $('#js_input7').val();
+    }
+    if ($('#js_input8').val() != "") {
+      param.leftMyopia = $('#js_input8').val();
+    }
+    if ($('#js_input9').val() != "") {
+      param.rightMyopia = $('#js_input9').val();
+    }
+    if ($('#js_input10').val() != "") {
+      if ($('#js_input10').val().length != 11) {
+        showToast("请输入正确的手机号码!");
+        return;
+      } else {
+        param.telphone = $('#js_input10').val();
+      }
+    }
+    if (_regionCode != "") {
+      param.regionCode = _regionCode;
+    }
+
+    if (_regionCodeArr.length > 0) {
+      param.regionCodeArr = JSON.stringify(_regionCodeArr);
+    }
+
+    if ($('#js_input12').val() != "") {
+      param.addrDetail = $('#js_input12').val();
+    }
+    var uuid = getQueryString('uuid');
+    if (uuid != null) {
+      param.branchUid = uuid;
+    }
+    $("#submit_loading").css("display", 'inline-block');
+    $.ajax({
+      type: 'POST',
+      url: "http://192.168.15.38:8060/organization/patient/add-patient",
+      data: JSON.stringify(param),
+      contentType: 'application/json;charset=UTF-8',
+      success: function (res) {
+        $("#submit_loading").css("display", 'none');
+        if (res.code === 200) {
+          $("#page1").css('display', 'none');
+          $("#page2").css('display', 'block');
+        } else {
+          showToast(res.message);
+        }
+      },
+      error: function (error) {
+        $("#submit_loading").css("display", 'none');
+      }
+    });
+  });
+  $('#picker_address').on('click', function () {
+    weui.picker(citys, {
+      depth: 3,
+      defaultValue: [360000, 360100, 360122],
+      onChange: function onChange (result) {
+      },
+      onConfirm: function onConfirm (result) {
+        _regionCode = result[result.length - 1]['value'];
+        _regionCodeArr = [];
+        $('#js_input6').val("");
+        for (var i = 0; i < result.length; i++) {
+          var city = $('#js_input6').val();
+          _regionCodeArr.push(result[i]['value']);
+          $('#js_input6').val(city + result[i]['label'] + " ")
+        }
+      },
+      id: 'cascadePicker',
+      title: '请选择省市区'
+    });
+  });
+  $(function () {
+    var tmpl = '<li class="weui-uploader__file" role="img" tabindex="0" style="background-image:url(#url#)"></li>',
+      $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
+      $uploaderInput = $("#uploaderInput"),
+      $uploaderFiles = $("#uploaderFiles")
+      ;
+
+    $uploaderInput.on("change", function (e) {
+      var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+      for (var i = 0, len = files.length; i < len; ++i) {
+        var file = files[i];
+
+        if (url) {
+          src = url.createObjectURL(file);
+        } else {
+          src = e.target.result;
+        }
+
+        $uploaderFiles.append($(tmpl.replace('#url#', src)));
+      }
+    });
+    var currentImg;
+    $uploaderFiles.on("click", "li", function () {
+      $galleryImg.attr("style", this.getAttribute("style"));
+      $gallery.attr('aria-hidden', 'false');
+      $gallery.attr('aria-modal', 'true');
+      $gallery.fadeIn(100);
+      setTimeout(function () {
+        $galleryImg.attr("tabindex", '-1').trigger('focus');
+      }, 200);
+      currentImg = this;
+    });
+    $gallery.on("click", function () {
+      $gallery.attr('aria-modal', 'false');
+      $gallery.attr('aria-hidden', 'true');
+      $gallery.fadeOut(100);
+      setTimeout(function () {
+        $galleryImg.removeAttr("tabindex");
+      }, 200);
+      currentImg.focus();
+    });
+  });
+
+</script>
+
+
+</html>
