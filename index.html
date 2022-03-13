@@ -5,12 +5,10 @@
   <title>填写个人资料</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <link href="https://cdn.staticfile.org/weui/2.5.1/style/weui.min.css" rel="stylesheet">
+  <link href="http://cdn.staticfile.org/weui/2.5.1/style/weui.min.css" rel="stylesheet">
 
   <style type="text/css">
     body {
-      /* margin: 0 !important; */
       max-width: 40rem;
       margin: 0 auto;
     }
@@ -180,7 +178,6 @@
     </div>
   </div>
 
-
   <div class="page" id="page2" style="display: none;height: 100vh;">
     <div class="weui-msg">
       <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
@@ -212,13 +209,9 @@
       <p class="weui-toast__content" id="toast_text"></p>
     </div>
   </div>
-
 </body>
-
-
-
-<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-<script type="text/javascript" src="https://res.wx.qq.com/t/wx_fed/cdn_libs/res/weui/1.2.5/weui.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/t/wx_fed/cdn_libs/res/weui/1.2.5/weui.min.js"></script>
 <script type="text/javascript" src="./js/city.js"></script>
 
 <script type="text/javascript">
@@ -256,7 +249,7 @@
       _idcard = $('#js_input2').val();
       $.ajax({
         type: 'GET',
-        url: "http://qcdg5hv5utvf37p2s.osorg.cn/user/detail/" + _idcard,
+        url: "https://qcdg5hv5utvf37p2s.osorg.cn/user/detail/" + _idcard,
         contentType: 'application/json;charset=UTF-8',
         success: function (res) {
           if (res.code === 200) {
@@ -362,7 +355,7 @@
     if (_uid == undefined || _uid == "") {
       $.ajax({
         type: 'POST',
-        url: "http://qcdg5hv5utvf37p2s.osorg.cn/user/add",
+        url: "https://qcdg5hv5utvf37p2s.osorg.cn/user/add",
         data: JSON.stringify(param),
         contentType: 'application/json;charset=UTF-8',
         success: function (res) {
@@ -382,7 +375,7 @@
       param.id = _uid;
       $.ajax({
         type: 'POST',
-        url: "http://qcdg5hv5utvf37p2s.osorg.cn/user/update",
+        url: "https://qcdg5hv5utvf37p2s.osorg.cn/user/update",
         data: JSON.stringify(param),
         contentType: 'application/json;charset=UTF-8',
         success: function (res) {
@@ -451,7 +444,7 @@
       // 上传文件
       $.ajax({
         type: 'POST',
-        url: "http://qcdg5hv5utvf37p2s.osorg.cn/oss/upload/single",
+        url: "https://qcdg5hv5utvf37p2s.osorg.cn/oss/upload/single",
         data: formData,
         cache: false, // 上传文件无需缓存
         processData: false, // 使数据不做处理
