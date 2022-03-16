@@ -133,7 +133,7 @@
                   <div class="weui-uploader">
                     <div class="weui-uploader__hd" role="option"
                       aria-labelledby="js_uploader_title js_a11y_comma js_uploader_current_num js_uploader_unit js_a11y_comma js_uploader_max_tips js_uploader_max_num js_uploader_unit">
-                      <p id="js_uploader_title" class="weui-uploader__title">身份证和合同上传</p>
+                      <p id="js_uploader_title" class="weui-uploader__title">文件上传</p>
                       <div class="weui-uploader__info">
                         <span id="js_uploader_current_num">0</span>/<span id="js_uploader_max_num">2</span>
                       </div>
@@ -219,7 +219,6 @@
     $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
     $uploaderInput = $("#uploaderInput"),
     $uploaderFiles = $("#uploaderFiles");
-  var src, url = window.URL || window.webkitURL || window.mozURL;
   var _regionCode = "";
   var _regionCodeArr = [];
   var _uid = "";
@@ -227,7 +226,7 @@
   var _regionName = "";
   // 允许上传的图片类型
   var allowTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'];
-  var maxSize = 1024 * 1024 * 10; // 10240KB，也就是 10MB
+  var maxSize = 1024 * 1024 * 2; // 10240KB，也就是 10MB
   var maxCount = 2;// 最大上传图片数量
   function showToast (msg) {
     var $textToast = $('#textToast');
@@ -408,7 +407,7 @@
         for (var i = 0; i < result.length; i++) {
           var city = $('#js_input8').val();
           _regionCodeArr.push(result[i]['value']);
-          $('#js_input8').val(city + result[i]['label'] + " ")
+          $('#js_input8').val(city + result[i]['label'] + " ");
         }
       },
       id: 'cascadePicker',
@@ -423,44 +422,41 @@
     }
     for (var i = 0, len = files.length; i < len; ++i) {
       var file = files[i];
-      if (file.size > maxSize) {
-        showToast("图片太大，不允许上传");
-      }
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
       if (allowTypes.indexOf(file.type) === -1) {
         showToast('只能选择照片上传');
         return;
       }
-      var formData = new FormData();
-      formData.append("file", file);
-      formData.append("fileType", 1);
-      if (url) {
-        src = url.createObjectURL(file);
-      } else {
-        src = e.target.result;
-      }
-      $uploaderFiles.append($(tmpl.replace('#url#', src)));
-      var num = $('.weui-uploader__file').length;
-      $('#js_uploader_current_num').text(num);
-      // 上传文件
-      $.ajax({
-        type: 'POST',
-        url: "https://qcdg5hv5utvf37p2s.osorg.cn/oss/upload/single",
-        data: formData,
-        cache: false, // 上传文件无需缓存
-        processData: false, // 使数据不做处理
-        contentType: false, // 不要设置Content-Type请求头
-        success: function (res) {
-          if (res.code === 200) {
-            _img.push(res.data)
-          } else {
-            showToast(res.message);
-          }
-        },
-        error: function (error) {
+      reader.onload = function () {
+        imgCompress(this.result, { square: 0.3, quality: 0.8 }, function (_base64) {
+          $uploaderFiles.append($(tmpl.replace('#url#', _base64)));
+          var num = $('.weui-uploader__file').length;
+          $('#js_uploader_current_num').text(num);
+          var _imgFile = _base64ToBlob(_base64);
+          var formData = new FormData();
+          formData.append("file", _imgFile);
+          formData.append("folderType", 1);
+          $.ajax({
+            type: 'POST',
+            url: "https://qcdg5hv5utvf37p2s.osorg.cn/oss/upload/single",
+            data: formData,
+            cache: false, // 上传文件无需缓存
+            processData: false, // 使数据不做处理
+            contentType: false, // 不要设置Content-Type请求头
+            success: function (res) {
+              if (res.code === 200) {
+                _img.push(res.data)
+              } else {
+                showToast(res.message);
+              }
+            },
+            error: function (error) {
 
-        }
-      });
-
+            }
+          });
+        });
+      };
     }
 
   });
@@ -483,6 +479,52 @@
       _img.splice(index - 1, 1);
     }
   });
+
+  function imgCompress (base64Url, imgAttr, callback) {
+    var img_image = new Image();
+    img_image.src = base64Url;
+    img_image.onload = function () {
+      if (imgAttr.square == undefined) {
+        imgAttr.square = 0.2;
+      }
+      if (imgAttr.quality == undefined) {
+        imgAttr.quality = 0.6;
+      }
+      var square = imgAttr.square,   //定义画布的大小，也就是图片压缩之后的像素
+        canvas = document.createElement('canvas'), //创建canvas元素
+        context = canvas.getContext('2d'),
+        imageWidth = Math.round(square * img_image.width),    //压缩图片的大小
+        imageHeight = Math.round(square * img_image.height),
+        data = '';
+
+      canvas.width = imageWidth;
+      canvas.height = imageHeight;
+      context.clearRect(0, 0, imageWidth, imageHeight);  //在给定矩形内清空一个矩形
+      context.drawImage(this, 0, 0, imageWidth, imageHeight);
+      var data = canvas.toDataURL('image/jpeg', imgAttr.quality);
+      callback(data);
+    };
+  }
+
+  function _base64ToBlob (base64Data) {
+    let arr = base64Data.split(","),
+      fileType = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      l = bstr.length,
+      u8Arr = new Uint8Array(l);
+
+    while (l--) {
+      u8Arr[l] = bstr.charCodeAt(l);
+    }
+    var filename = new Date().getTime();
+    if (fileType.indexOf("/") > -1) {
+      var temp = fileType.split("/");
+      filename = filename + "." + temp[1];
+    }
+    return new File([u8Arr], filename, {
+      type: fileType
+    });
+  }
 </script>
 
 </html>
